@@ -22,6 +22,7 @@ const App = () => {
     },[messages])
 
     const handleSend = async () => {
+      if(input.trim() === '') return;
       const text = input;
       setInput('');
       setMessages([
