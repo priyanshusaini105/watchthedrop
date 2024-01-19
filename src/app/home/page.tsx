@@ -9,32 +9,20 @@ import Extension from "@/components/extension/Extension";
 function Home() {
   const [input, setInput] = useState("");
 
-  const [suggestions, setSuggestions] = useState([]);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchSuggestions = async () => {
+      try{
 
-      const url = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://suggestqueries.google.com/complete/search?client=chrome&q=${input}`)}`;
+      const url = `/api/autocomplete?q=${input}`;
     
       const response = await fetch(url);
       const data = await response.json();
-      console.log(data)
-
-      // const response = await fetch(
-      //   url, https://api.allorigins.win/get?url=${encodeURIComponent('https://wikipedia.org')}
-      //   {
-      //     headers: {
-      //       'Access-Control-Allow-Origin': origin || '*',
-      //       'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
-      //       'Access-Control-Allow-Headers': 'Content-Type, Authorization'
-      //   }
-      //   }
-      
-      // const data = await response.json();
-
-      // console.log(data)
-
-      // setSuggestions(data.predictions.map((prediction: any) => prediction.description));
+      setSuggestions(data[1]);
+      }catch(err){
+        console.log(err)
+      }
     };
 
     fetchSuggestions();
@@ -56,7 +44,7 @@ function Home() {
           </div>
           <form action="#" method="POST" className="mx-auto mt-12 max-w-xl">
             <div className="flex flex-col items-center sm:flex-row sm:justify-center">
-              <div className="flex w-full max-w-sm items-center space-x-2">
+              <div className="flex w-full max-w-sm items-center space-x-2 relative">
                 <input
                   className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 "
                   type="text"
@@ -70,6 +58,22 @@ function Home() {
                 >
                   <Link href={`/products?q=${input}`}>Search</Link>
                 </button>
+                <div>
+                {
+                  suggestions.map((suggestion, i) => {
+                    return (
+                      <div key={i} className="z-10 w-full bg-white rounded-md mt-1">
+                        <Link href={`/products?q=${suggestion}`}>
+                          <div className="p-2 hover:bg-gray-100 cursor-pointer">
+                            {suggestion}
+                          </div>
+                        </Link>
+                      </div>
+                    )
+                  })
+                }
+
+                </div>
               </div>
             </div>
           </form>

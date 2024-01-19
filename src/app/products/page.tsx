@@ -3,7 +3,7 @@ import { ProductInfo } from '@/types';
 import ProductCard from '@/components/productcard/ProductCard';
 
 async function Products() {
-const res = await fetch(`https://dropmytest.onrender.com/search?q=iphone`);
+const res = await fetch(`https://dropmytest.onrender.com/search?q=iphon`);
 const data = await res.json() as {item: ProductInfo[]};
 
 
