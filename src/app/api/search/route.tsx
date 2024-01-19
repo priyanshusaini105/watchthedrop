@@ -31,23 +31,23 @@ export async function GET(req: NextRequest) {
 
     const qItems = result.items as SearchResult[];
 
-    const products:ProductSearchResult[]  = qItems.map((item) => {
-        return {
-            title: item.title,
-            link: item.link,
-            snippet: item.snippet,
-            image: item.
-        }
-    })
+    // const products  = qItems.map((item) => {
+    //     return ({
+    //         title: item.title,
+    //         link: item.link,
+    //         snippet: item.snippet,
+    //         image: item.
+    //     })
+    // })
 
-    const productResult =  {
-        items: products,
-        query
-    }
+    // const productResult =  {
+    //     items: products,
+    //     query
+    // }
 
 
 
-    return Response.json(productResult);
+    return Response.json({});
   } catch (error) {
     console.error("Error:", error);
     throw new Error("Failed to fetch search results");
