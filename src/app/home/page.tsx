@@ -13,20 +13,28 @@ function Home() {
 
   useEffect(() => {
     const fetchSuggestions = async () => {
-      const response = await fetch(
-        `https://suggestqueries.google.com/complete/search?client=chrome&q=${input}`,
-        {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = await response.json();
 
+      const url = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://suggestqueries.google.com/complete/search?client=chrome&q=${input}`)}`;
+    
+      const response = await fetch(url);
+      const data = await response.json();
       console.log(data)
 
-      setSuggestions(data.predictions.map((prediction: any) => prediction.description));
+      // const response = await fetch(
+      //   url, https://api.allorigins.win/get?url=${encodeURIComponent('https://wikipedia.org')}
+      //   {
+      //     headers: {
+      //       'Access-Control-Allow-Origin': origin || '*',
+      //       'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+      //       'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+      //   }
+      //   }
+      
+      // const data = await response.json();
+
+      // console.log(data)
+
+      // setSuggestions(data.predictions.map((prediction: any) => prediction.description));
     };
 
     fetchSuggestions();
