@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react'
 
 const App = () => {
 
-  const msgEnd = useRef(null)
+  const msgEnd = useRef<HTMLDivElement>(null)
 
 
   const [input, setInput] = useState("");
@@ -17,6 +17,7 @@ const App = () => {
     ]);
 
     useEffect(()=>{
+      if(!msgEnd.current) return;
       msgEnd.current.scrollIntoView();
     },[messages])
 
@@ -27,13 +28,6 @@ const App = () => {
         ...messages,
         {text,isBot:false}
       ])
-    const res = await sendMsgToOpenAI (text);
-     console.log(res);
-    setMessages ([
-    ...messages,
-    { text, isBot: false },
-    { text: res, isBot: true }
-    ])
   }
 
   // const handleClick = async ()=>{
@@ -41,7 +35,7 @@ const App = () => {
   //     console.log(res);
   // }
 
-  const handleEnter = async (e) => {
+  const handleEnter = async (e:KeyboardEvent) => {
     if (e.key == 'Enter') await handleSend();
     }
 
