@@ -18,6 +18,24 @@ const data = await res.json() as {item: ProductInfo[]};
                 )
             })
         }
+         {
+            data.item.map((item) => {
+                return (
+                    <div className="post" key={item.product_id}>
+                        <ProductCard product={item}/>
+                    </div>
+                )
+            })
+        }
+         {
+            data.item.map((item) => {
+                return (
+                    <div className="post" key={item.product_id}>
+                        <ProductCard product={item}/>
+                    </div>
+                )
+            })
+        }
     </div>
   )
 }
