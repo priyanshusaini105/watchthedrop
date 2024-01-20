@@ -9,7 +9,7 @@ async function Products({ searchParams }: { searchParams: { q: string } }) {
   // const searchParams = useSearchParams();
 
   const res = await fetch(
-    `https://dropmytest.onrender.com/search?q=${searchParams.q}`
+    `http://localhost:3002/search?q=${searchParams.q}`
   );
 
   const data = (await res.json()) as { item: ProductInfo[] };

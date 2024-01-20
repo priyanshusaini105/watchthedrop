@@ -9,7 +9,7 @@ import ProductList from "@/components/productlist/ProductList";
  function App() {
 
 async function api() {
-  const res = await fetch(`https://dropmytest.onrender.com/search?q=iphone`);
+  const res = await fetch(`http://localhost:3002/search?q=iphone`);
   const data = await res.json();
   return data as { item: ProductInfo[] };
 }

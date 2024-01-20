@@ -4,7 +4,7 @@ import ProductList from "@/components/productlist/ProductList";
 import React from 'react';
 
 async function response() {
-  const res = await fetch(`https://dropmytest.onrender.com/search?q=iphone`);
+  const res = await fetch(`http://localhost:3002/search?q=iphone`);
   const data = await res.json() as {item: ProductInfo[]};
 
   return (
