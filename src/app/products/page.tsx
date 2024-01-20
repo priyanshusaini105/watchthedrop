@@ -1,14 +1,19 @@
+"use client"
 import React from 'react'
 import { ProductInfo } from '@/types';
 import ProductCard from '@/components/productcard/ProductCard';
+ //import { useSearchParams } from 'next/navigation'
 
 async function Products() {
-const res = await fetch(`https://dropmytest.onrender.com/search?q=iphon`);
+// const searchParams = useSearchParams();
+// const q = searchParams.get("q");
+// console.log(q);
+const res = await fetch(`https://dropmytest.onrender.com/search?q=iphone`);
 const data = await res.json() as {item: ProductInfo[]};
 
 
   return (
-    <div className='container mt-12 w-full items-center justify-center flex flex-wrap gap-24 '>
+    <div className='container mt-24 w-full items-center justify-center flex flex-wrap gap-24 '>
         {
             data.item.map((item) => {
                 return (
