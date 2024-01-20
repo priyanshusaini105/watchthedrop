@@ -5,11 +5,11 @@ import ProductCard from '@/components/productcard/ProductCard';
 import Footer from '@/components/footer/Footer';
  //import { useSearchParams } from 'next/navigation'
 
-async function Products() {
+async function Products({searchParams}:{searchParams:{q:string}}) {
 // const searchParams = useSearchParams();
-// const q = searchParams.get("q");
-// console.log(q);
-const res = await fetch(`https://dropmytest.onrender.com/search?q=iphone`);
+
+const res = await fetch(`https://dropmytest.onrender.com/search?q=${searchParams.q}`);
+
 const data = await res.json() as {item: ProductInfo[]};
 
 
@@ -24,25 +24,6 @@ const data = await res.json() as {item: ProductInfo[]};
                 )
             })
         }
-         {
-            data.item.map((item) => {
-                return (
-                    <div className="post" key={item.product_id}>
-                        <ProductCard product={item}/>
-                    </div>
-                )
-            })
-        }
-         {
-            data.item.map((item) => {
-                return (
-                    <div className="post" key={item.product_id}>
-                        <ProductCard product={item}/>
-                    </div>
-                )
-            })
-        }
-    <Footer/>
     </div>
   )
 }

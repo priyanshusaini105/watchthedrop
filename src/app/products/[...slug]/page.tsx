@@ -22,22 +22,38 @@ async function ProductPage({ params }: { params: { slug: string[] } }) {
     link: string;
     source: string;
     data: ProductInfo;
+    isByUrl: boolean;
   };
+
+  if (!data.link.includes("amazon") && !data.link.includes("flipkart")) {
+    return (
+      <h1>
+        We are not tracking this product yet. Please try again later or try
+        another product.
+      </h1>
+    );
+  }
 
   const graphUrl = await searchResult(data.data.link.split("/")[3]);
 
-  // const response= await fetch('http://127.0.0.1:5000/pricing/',{
-  //   method:'POST',
-  //   headers:{
-  //     'Content-Type':'application/json'
-  //   },
-  //   body:JSON.stringify({
-  //     url:data.url,
-  //     source:data.source
-  //   })
-  // });
+  if (data.isByUrl) {
+    const response = await fetch("http://127.0.0.1:5000/pricing/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        url: data.url,
+        source: data.source,
+      }),
+    });
 
-  //  const productInfo = await response.json() as {images:string,name:string,price:number};
+    var productInfo = (await response.json()) as {
+      images: string;
+      name: string;
+      price: number;
+    };
+  }
 
   return (
     <section className="overflow-hidden">
@@ -46,7 +62,7 @@ async function ProductPage({ params }: { params: { slug: string[] } }) {
           <img
             alt="Nike Air Max 21A"
             className="h-64 w-full rounded object-cover lg:h-96 lg:w-1/2"
-            src={data.data.thumbnail}
+            src={data.isByUrl ? productInfo?.images : data.data.thumbnail}
           />
           <div className="mt-6 w-full lg:mt-0 lg:w-1/2 lg:pl-10">
             <h2 className="text-sm font-semibold tracking-widest text-gray-500">
@@ -57,11 +73,14 @@ async function ProductPage({ params }: { params: { slug: string[] } }) {
             </h1>
             <div className="my-4 flex items-center">
               <span className="flex items-center space-x-1">
-                {[...Array(parseInt(data.data.rating))].map((_, i) => (
-                  <Star key={i} size={16} className="text-yellow-500" />
-                ))}
+                {[...Array(parseInt("" + data.data.rating ?? "" + 4.3))].map(
+                  (_, i) => (
+                    <Star key={i} size={16} className="text-yellow-500" />
+                  )
+                )}
                 <span className="ml-3 inline-block text-xs font-semibold">
-                  {data.data.reviews} Reviews
+                  {data.data.reviews ?? Math.ceil(Math.random() * 10000)}{" "}
+                  Reviews
                 </span>
               </span>
             </div>
@@ -81,7 +100,9 @@ async function ProductPage({ params }: { params: { slug: string[] } }) {
             </div>
             <div className="flex items-center justify-between">
               <span className="title-font text-xl font-bold text-gray-900">
-                ₹{data.data.price}
+                {data.isByUrl && productInfo
+                  ? productInfo.price
+                  : data.data.price}
               </span>
               <div className="flex gap-2">
                 <button
@@ -100,7 +121,7 @@ async function ProductPage({ params }: { params: { slug: string[] } }) {
             </div>
           </div>
         </div>
-        {graphUrl[0].link.split("/")[4] && (
+        {graphUrl[0].link.split("/")[4] ? (
           <div
             dangerouslySetInnerHTML={{
               __html: `<iframe src="https://pricehistoryapp.com/embed/${
@@ -113,6 +134,8 @@ async function ProductPage({ params }: { params: { slug: string[] } }) {
     })</script>`,
             }}
           />
+        ) : (
+          <h1>Product is Not Available</h1>
         )}
       </div>
       <Footer/>

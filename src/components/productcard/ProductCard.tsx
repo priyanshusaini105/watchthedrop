@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { ProductInfo } from '@/types'
 
 type Props ={
-  product:ProductInfo
+  product:ProductInfo,
 }
 
 const ProductCard:FC<Props>=({product})=> {
