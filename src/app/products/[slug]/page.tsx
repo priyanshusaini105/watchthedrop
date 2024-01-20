@@ -1,5 +1,6 @@
 import React from 'react'
 import { Star, ChevronDown } from 'lucide-react'
+import { Chart } from '@/components/highchart'
 
 function ProductPage() {
     return (
@@ -58,6 +59,7 @@ function ProductPage() {
                 </div>
               </div>
             </div>
+            {/* <Chart/> */}
           </div>
         </section>
       )

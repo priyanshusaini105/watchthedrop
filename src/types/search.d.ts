@@ -34,4 +34,6 @@ export type ProductInfo = {
   thumbnail: string;
   tag: string;
   delivery: string;
+  comparison_link: string;
+  rating: string;
 };
