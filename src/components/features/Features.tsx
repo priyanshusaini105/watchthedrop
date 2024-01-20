@@ -7,15 +7,14 @@ function Features() {
           <div className="mx-auto max-w-xl text-center">
             <div className="mx-auto inline-flex rounded-full bg-gray-100 px-4 py-1.5">
               <p className="text-xs font-semibold uppercase tracking-widest text-black">
-                100+ Tailwind Components
+                Price Tracker
               </p>
             </div>
             <h2 className="mt-12 text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">
-              DevUI helps you build beautiful website
+              Watch The Drop  helps you to track Prices
             </h2>
             <p className="mt-4 text-base leading-relaxed text-gray-600">
-              Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-              consequat duis enim velit mollit.
+            Navigate the ever-changing landscape of digital products with ease as PriceGraph empowers you to track and analyze the price history 
             </p>
           </div>
           <div className="mt-12 grid grid-cols-1 gap-y-8 text-center sm:grid-cols-2 sm:gap-12 lg:grid-cols-4">
@@ -36,10 +35,10 @@ function Features() {
           ></path>
         </svg>
               </div>
-              <h3 className="mt-8 text-lg font-semibold text-black">Secured Payments</h3>
+              <h3 className="mt-8 text-lg font-semibold text-black">Secured Authentication</h3>
               <p className="mt-4 text-sm text-gray-600">
-                Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-                consequat duis enim velit mollit.
+              Secured Authentication using next auth in which user register and login through 
+credential and OAuth
               </p>
             </div>
             <div>
@@ -61,14 +60,13 @@ function Features() {
               </div>
               <h3 className="mt-8 text-lg font-semibold text-black">Fast & Easy to Load</h3>
               <p className="mt-4 text-sm text-gray-600">
-                Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-                consequat duis enim velit mollit.
+                very fast and responsive because we made it using latest Next js 14 and nodejs and future price prediction using RNN
               </p>
             </div>
             <div>
               <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-green-100">
               <svg
-          class="h-9 w-9 text-green-600"
+          className="h-9 w-9 text-green-600"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -82,16 +80,15 @@ function Features() {
           ></path>
         </svg>
               </div>
-              <h3 className="mt-8 text-lg font-semibold text-black">Light & Dark Version</h3>
+              <h3 className="mt-8 text-lg font-semibold text-black">Price Comparison</h3>
               <p className="mt-4 text-sm text-gray-600">
-                Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-                consequat duis enim velit mollit.
+                user can compare the prices of similar products across different websites and in different categories
               </p>
             </div>
             <div>
               <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-red-100">
               <svg
-          class="h-9 w-9 text-red-600"
+          className="h-9 w-9 text-red-600"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -105,10 +102,9 @@ function Features() {
           ></path>
         </svg>
               </div>
-              <h3 className="mt-8 text-lg font-semibold text-black">Filter Blocks</h3>
+              <h3 className="mt-8 text-lg font-semibold text-black">Filter By Prices</h3>
               <p className="mt-4 text-sm text-gray-600">
-                Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-                consequat duis enim velit mollit.
+                User can Filter the Product using prices in different e-commerce website
               </p>
             </div>
           </div>
