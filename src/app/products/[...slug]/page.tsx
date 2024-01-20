@@ -3,6 +3,8 @@ import React, { useEffect } from "react";
 import { Star, ChevronDown } from "lucide-react";
 import { searchResult } from "../../action/search";
 import { ProductInfo } from "@/types";
+import Link from "next/link";
+import { AlertButton } from "@/components/setAlert";
 
 async function ProductPage({ params }: { params: { slug: string[] } }) {
   // useEffect(()=>{
@@ -24,6 +26,8 @@ async function ProductPage({ params }: { params: { slug: string[] } }) {
     isByUrl: boolean;
   };
 
+  console.log(data.isByUrl);
+
   if (!data.link.includes("amazon") && !data.link.includes("flipkart")) {
     return (
       <h1>
@@ -33,7 +37,7 @@ async function ProductPage({ params }: { params: { slug: string[] } }) {
     );
   }
 
-  const graphUrl = await searchResult(data.data.link.split("/")[3]);
+  const graphUrl = await searchResult(data.link.split("/")[3]);
 
   if (data.isByUrl) {
     const response = await fetch("http://127.0.0.1:5000/pricing/", {
@@ -42,8 +46,8 @@ async function ProductPage({ params }: { params: { slug: string[] } }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        url: data.url,
-        source: data.source,
+        url: data.link,
+        source: data.link,
       }),
     });
 
@@ -68,17 +72,21 @@ async function ProductPage({ params }: { params: { slug: string[] } }) {
               Watch The Drop
             </h2>
             <h1 className="my-4 text-3xl font-semibold text-black">
-              {data.data.title}
+              {data.isByUrl ? productInfo.name : data.data.title}
             </h1>
             <div className="my-4 flex items-center">
               <span className="flex items-center space-x-1">
-                {[...Array(parseInt("" + data.data.rating ?? "" + 4.3))].map(
-                  (_, i) => (
-                    <Star key={i} size={16} className="text-yellow-500" />
-                  )
-                )}
+                {[
+                  ...Array(
+                    parseInt(!data.isByUrl ? "" + data.data.rating : "" + 4.3)
+                  ),
+                ].map((_, i) => (
+                  <Star key={i} size={16} className="text-yellow-500" />
+                ))}
                 <span className="ml-3 inline-block text-xs font-semibold">
-                  {data.data.reviews ?? Math.ceil(Math.random() * 10000)}{" "}
+                  {!data.isByUrl
+                    ? data.data.reviews
+                    : Math.ceil(Math.random() * 10000)}{" "}
                   Reviews
                 </span>
               </span>
@@ -104,18 +112,13 @@ async function ProductPage({ params }: { params: { slug: string[] } }) {
                   : data.data.price}
               </span>
               <div className="flex gap-2">
-                <button
-                  type="button"
-                  className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                <AlertButton url={data.link} />
+                <Link
+                  href={data.isByUrl ? data.link : data.data.link}
+                  className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black capitalize"
                 >
-                  Set Alert
-                </button>
-                <button
-                  type="button"
-                  className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                >
-                  Buy from Amazon
-                </button>
+                  Buy from {data.link.split(".")[1]}
+                </Link>
               </div>
             </div>
           </div>
@@ -123,7 +126,7 @@ async function ProductPage({ params }: { params: { slug: string[] } }) {
         {graphUrl[0].link.split("/")[4] ? (
           <div
             dangerouslySetInnerHTML={{
-              __html: `<iframe src="https://pricehistoryapp.com/embed/${
+              __html: `<iframe id="price_frame" src="https://pricehistoryapp.com/embed/${
                 graphUrl[0].link.split("/")[4]
               }" width="100%" height="500" frameborder="0" allowtransparency="true" scrolling="no"></iframe><script>const allLinks=document.querySelectorAll('a')  ;
     allLinks.forEach(ele=>{
@@ -134,7 +137,7 @@ async function ProductPage({ params }: { params: { slug: string[] } }) {
             }}
           />
         ) : (
-          <h1>Product is Not Available</h1>
+          <h1>Product is Not Available for this product</h1>
         )}
       </div>
     </section>

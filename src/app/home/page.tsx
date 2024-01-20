@@ -7,39 +7,42 @@ import Extension from "@/components/extension/Extension";
 import { Faq } from "@/components/faq/Faq";
 import { TypewriterEffectSmoothDemo } from "@/pages/home/TypewriterEffectSmoothDemo";
 import Image from "next/image";
-
+import { useRouter } from "next/navigation";
 
 function Home() {
   const [input, setInput] = useState("");
-  const [isLink, setIsLink] = useState(false);
-
-  
 
   const [suggestions, setSuggestions] = useState<string[]>([]);
+
+  const router = useRouter();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
     const isInputLink = urlRegex.test(input);
 
-    // Set the flag based on whether a link is detected
-    setIsLink(isInputLink);
-    // Redirect to the search page when the form is submitted
-    window.location.href = `/products?q=${input}`;
-  };
+    if (isInputLink) {
+      const slug = {
+        isByUrl: true,
+        link: input,
+      };
+      location.href = `/products/${encodeURIComponent(JSON.stringify(slug))}`;
+      return
+    }
 
+    location.href = `/products?q=${input}`;
+  };
 
   useEffect(() => {
     const fetchSuggestions = async () => {
       try {
-
         const url = `/api/autocomplete?q=${input}`;
 
         const response = await fetch(url);
         const data = await response.json();
         setSuggestions(data[1]);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     };
 
@@ -49,13 +52,13 @@ function Home() {
   return (
     <div className="home flex flex-col  mt-[-30px] ">
       <div className=" top-8 left-3 absolute">
-      <Image
+        <Image
           src="/LOGO (2).png"
           alt="Description of your image"
           width="100"
           height="500"
         />
-        </div>
+      </div>
       <section className="pb-10">
         <Image
           src="/backgroundimg.png"
@@ -75,7 +78,11 @@ function Home() {
               voluptate recusandae?
             </p>
           </div>
-          <form onSubmit={handleSearch} method="POST" className="mx-auto mt-16 max-w-xl">
+          <form
+            onSubmit={handleSearch}
+            method="POST"
+            className="mx-auto mt-16 max-w-xl"
+          >
             <div className="flex flex-wrap  items-center sm:flex-row sm:justify-center">
               <div className="flex w-full max-w-sm items-center space-x-2 relative">
                 <input
@@ -89,24 +96,21 @@ function Home() {
                   type="submit"
                   className="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                 >
-                  <Link href={`/products?q=${input}`}>Search</Link>
+                  Search
                 </button>
               </div>
               <div className="w-[40%]  absolute top-[36vh] border-2 rounded-md">
-                {
-                  suggestions.map((suggestion, i) => {
-                    return (
-                      <div key={i} className="z-10 flex  w-full bg-white   ">
-                        <Link href={`/products?q=${suggestion}`}>
-                          <div className="py-3  w-full ml-12 hover:bg-gray-100 cursor-pointer">
-                            {suggestion}
-                          </div>
-                        </Link>
-                      </div>
-                    )
-                  })
-                }
-
+                {suggestions.map((suggestion, i) => {
+                  return (
+                    <div key={i} className="z-10 flex  w-full bg-white   ">
+                      <Link href={`/products?q=${suggestion}`}>
+                        <div className="py-3  w-full ml-12 hover:bg-gray-100 cursor-pointer">
+                          {suggestion}
+                        </div>
+                      </Link>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </form>
