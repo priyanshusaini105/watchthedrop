@@ -1,5 +1,5 @@
 "use client";
-import { fetchProducts } from "@/app/action/fetchProducts";
+import { fetchProducts, sendChat, startBot } from "@/app/action/fetchProducts";
 import ProductCard from "@/components/productcard/ProductCard";
 import { ProductInfo } from "@/types";
 import React, {
@@ -13,7 +13,7 @@ import React, {
 
 const App = ({ params }) => {
   const msgEnd = useRef<HTMLDivElement>(null);
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<ProductInfo>([]);
 
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
@@ -33,14 +33,20 @@ const App = ({ params }) => {
     const text = input;
     setInput("");
     setMessages([...messages, { text, isBot: false }]);
+
+    const botMsg = await sendChat(text);
+
+    setMessages([...messages, { text: botMsg, isBot: true }]);
   };
 
   useEffect(() => {
     // const products = fetchProducts(params.slug);
     // console.log(products);
     async function getProducts() {
-      const products = await fetchProducts(params.slug);
-      setProducts(products);
+      const product = await fetchProducts(params.slug);
+      setProducts(product);
+      const startMessage = await startBot(product);
+      setMessages([...messages, { text: startMessage, isBot: true }]);
     }
 
     getProducts();
