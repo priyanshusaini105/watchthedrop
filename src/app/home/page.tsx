@@ -11,11 +11,19 @@ import Image from "next/image";
 
 function Home() {
   const [input, setInput] = useState("");
+  const [isLink, setIsLink] = useState(false);
+
+  
 
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+    const isInputLink = urlRegex.test(input);
+
+    // Set the flag based on whether a link is detected
+    setIsLink(isInputLink);
     // Redirect to the search page when the form is submitted
     window.location.href = `/products?q=${input}`;
   };
