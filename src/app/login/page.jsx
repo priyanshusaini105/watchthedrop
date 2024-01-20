@@ -1,5 +1,6 @@
 import React from 'react'
 import { ArrowRight } from 'lucide-react'
+import Footer from '@/components/footer/Footer'
 
 export function Login() {
   return (
@@ -94,6 +95,7 @@ export function Login() {
           />
         </div>
       </div>
+      <Footer/>
     </section>
   )
 }

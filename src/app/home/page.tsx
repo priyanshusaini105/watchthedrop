@@ -7,6 +7,7 @@ import Extension from "@/components/extension/Extension";
 import { Faq } from "@/components/faq/Faq";
 import { TypewriterEffectSmoothDemo } from "@/pages/home/TypewriterEffectSmoothDemo";
 import Image from "next/image";
+import Footer from "@/components/footer/Footer";
 
 
 function Home() {
@@ -123,6 +124,7 @@ function Home() {
       <Faq />
       <TypewriterEffectSmoothDemo />
       {/* <Extension /> */}
+      <Footer/>
     </div>
   );
 }

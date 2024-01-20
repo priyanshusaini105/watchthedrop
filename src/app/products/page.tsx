@@ -2,6 +2,7 @@
 import React from 'react'
 import { ProductInfo } from '@/types';
 import ProductCard from '@/components/productcard/ProductCard';
+import Footer from '@/components/footer/Footer';
  //import { useSearchParams } from 'next/navigation'
 
 async function Products() {
@@ -41,6 +42,7 @@ const data = await res.json() as {item: ProductInfo[]};
                 )
             })
         }
+    <Footer/>
     </div>
   )
 }

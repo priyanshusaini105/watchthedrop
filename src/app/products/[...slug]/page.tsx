@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { Star, ChevronDown } from "lucide-react";
 import { searchResult } from "../../action/search";
 import { ProductInfo } from "@/types";
+import Footer from "@/components/footer/Footer";
 
 async function ProductPage({ params }: { params: { slug: string[] } }) {
   // useEffect(()=>{
@@ -114,6 +115,7 @@ async function ProductPage({ params }: { params: { slug: string[] } }) {
           />
         )}
       </div>
+      <Footer/>
     </section>
   );
 }
