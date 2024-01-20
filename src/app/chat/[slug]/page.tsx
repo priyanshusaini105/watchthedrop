@@ -99,11 +99,11 @@ const App = ({ params }) => {
           </div>
         </div>
       </div>
-      {
-        products.map((product: ProductInfo,i) => {
-            return <ProductCard key={i} product={product} />;
-        })
-      }
+      <div className="flex flex-col">
+        {products.map((product: ProductInfo, i) => {
+          return <ProductCard key={i} product={product} />;
+        })}
+      </div>
     </div>
   );
 };
