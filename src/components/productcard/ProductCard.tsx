@@ -8,7 +8,16 @@ type Props ={
 }
 
 const ProductCard:FC<Props>=({product})=> {
-  console.log(product.thumbnail)
+
+  const urlFeild=product.link.split('/');
+
+  const data ={
+    data:product,
+    source:urlFeild[3],
+    link:product.link
+  }
+  
+
     return (
         <div className="w-[300px] rounded-md border">
           <img
@@ -32,7 +41,7 @@ const ProductCard:FC<Props>=({product})=> {
                 <Link href={product.comparison_link}>Compare</Link>
               </span>
             </div>
-            <Link href="/products/post">
+            <Link href={`/products/${encodeURIComponent(JSON.stringify(data))}`}>
             <button
               type="button"
               className="mt-4 w-full rounded-sm bg-black px-2 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black" >
