@@ -64,6 +64,7 @@ async function ProductPage({ params }: { params: { slug: string[] } }) {
 
     return prediction;
   }
+  
 
   const price = data.isByUrl ? productInfo?.price : data.data.extracted_price;
   const prediction = getPrediction(+price).toFixed(0);
@@ -150,10 +151,11 @@ async function ProductPage({ params }: { params: { slug: string[] } }) {
           <h1>Product is Not Available for this product</h1>
         )}
       </div>
-      <div className="mt-24">
-        <h2>Prediction By Chariot AI: </h2>
+      <div className="mt-24 flex gap-2 text-center w-full justify-center">
+        <h2 className="font-bold text-xl text-center">Prediction By Chariot AI: </h2>
         {prediction > +price ? (
-          <div>
+          <div className="text-red-600 flex">
+            {prediction}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -168,10 +170,9 @@ async function ProductPage({ params }: { params: { slug: string[] } }) {
                 d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"
               />
             </svg>{" "}
-            {prediction}
           </div>
         ) : (
-          <div>
+          <div className="text-green-600 flex">
             {prediction}
             <svg
               xmlns="http://www.w3.org/2000/svg"
